@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Forms - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  </head>
+  <body>
+      <!-- End Sidebar -->
+{% include 'branch_navbar.html' %}
+          <!-- End Navbar -->
+        </div><br/> <br/> <br/> <br/>
+<form method="POST" enctype="multipart/form-data">
+             {% csrf_token %}
+        <div class="container">
+          <div class="page-inner">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Branch information</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="staffname">Staff Name:</label>
+                    <input type="text" id="staffname" name="staffname" value="{{data.staffname}}" class="form-control" required>
+                </div>
+                      </div>
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                    <label for="staffPhone">Mobile:</label>
+                    <input type="tel" id="staffPhone" name="staffPhone" value="{{data.staffPhone}}" class="form-control" required>
+                </div>
+            </div>
+           <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                    <label for="staffaddress"> Address:</label>
+                    <input type="text" id="staffaddress" name="staffaddress" value="{{data.staffaddress}}" class="form-control" required>
+                </div>
+           </div>
+                <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                    <label for="aadhar">Aadhar No.:</label>
+                    <input type="text" id="aadhar" name="aadhar" value="{{data.aadhar}}" class="form-control" required>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                    <label for="staffid"> Staff ID:</label>
+                    <input type="text" id="staffid" name="staffid" value="{{data.staffid}}" class="form-control" required>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+                    </div>
+                  </div>
+
+        </form>
+    </div>
+  </div>
+
+<script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+<!-- Chart JS -->
+<script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+<!-- jQuery Sparkline -->
+<script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+<!-- Chart Circle -->
+<script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+<!-- Datatables -->
+<script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+<!-- Bootstrap Notify -->
+<script src="{% static 'assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+<!-- jQuery Vector Maps -->
+<script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+<script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+<!-- Google Maps Plugin -->
+<script src="{% static 'assets/js/plugin/gmaps/gmaps.js' %}"></script>
+
+<!-- Sweet Alert -->
+<script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+<!-- Kaiadmin JS -->
+<script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+<!-- Kaiadmin DEMO methods, don't include it in your project! -->
+<script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+</body>
+</html>

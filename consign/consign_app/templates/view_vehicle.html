@@ -1,0 +1,161 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  </head>
+  <body>
+  {% include 'index_menu.html' %}
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Driver Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table
+                        id="basic-datatables"
+                        class="display table table-striped table-hover"
+                      >
+                        <thead>
+                          <tr>
+                           <th>Vehicle Number</th>
+    <th>RC Date</th>
+    <th>Insurance Date</th>
+    <th>Permit Date</th>
+    <th>Tax Date</th>
+    <th>Emission Date</th>
+    <th>Action</th>
+    <th></th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+{% for d in data %}
+<tr class="custom-row">
+    <td>{{ d.vehicle_number }}</td>
+
+    <!-- RC Date with color based on days left -->
+    <td style="background-color: {% if d.rc_days_left <= 7 and d.rc_days_left > 0 %}orange
+                                     {% elif d.rc_days_left <= 0 %}red
+                                     {% endif %};">
+        {{ d.rccardate }}
+    </td>
+
+    <!-- Insurance Date with color based on days left -->
+    <td style="background-color: {% if d.insurance_days_left <= 7 and d.insurance_days_left > 0 %}orange
+                                     {% elif d.insurance_days_left <= 0 %}red
+                                     {% endif %};">
+        {{ d.incurencedate }}
+    </td>
+
+    <!-- Permit Date with color based on days left -->
+    <td style="background-color: {% if d.permit_days_left <= 7 and d.permit_days_left > 0 %}orange
+                                     {% elif d.permit_days_left <= 0 %}red
+                                     {% endif %};">
+        {{ d.permitdate }}
+    </td>
+
+    <!-- Tax Date with color based on days left -->
+    <td style="background-color: {% if d.tax_days_left <= 7 and d.tax_days_left > 0 %}orange
+                                     {% elif d.tax_days_left <= 0 %}red
+                                     {% endif %};">
+        {{ d.taxdate }}
+    </td>
+
+    <!-- Emission Date with color based on days left -->
+    <td style="background-color: {% if d.emission_days_left <= 7 and d.emission_days_left > 0 %}orange
+                                     {% elif d.emission_days_left <= 0 %}red
+                                     {% endif %};">
+        {{ d.emissiondate }}
+    </td>
+
+
+
+                            <td class="action-btns">
+        <a href="{% url 'vehicle_edit' d.id %}" class="btn btn-info btn-lg">EDIT</a>
+    </td>
+    <td class="action-btns">
+        <a href="{% url 'vehicle_delete' d.id %}" class="btn btn-danger">DELETE</a>
+    </td>
+</tr>
+{% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- End Custom template -->
+    </div>
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+
+  </body>
+</html>
+

@@ -1,0 +1,243 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+        WebFont.load({
+          google: { families: ["Public Sans:300,400,500,600,700"] },
+          custom: {
+            families: [
+              "Font Awesome 5 Solid",
+              "Font Awesome 5 Regular",
+              "Font Awesome 5 Brands",
+              "simple-line-icons",
+            ],
+            urls: ["{% static 'assets/css/fonts.min.css' %}"],
+          },
+          active: function () {
+            sessionStorage.fonts = true;
+          },
+        });
+    </script>
+<script>
+    // Function to set the default date to the current date
+function setCurrentDate() {
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1; // Months are zero-based
+    var year = today.getFullYear();
+
+    // Format date as YYYY-MM-DD
+    var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+    // Set the value of the date input
+    document.getElementById('date').value = formattedDate;
+}
+
+// Run the function when the page loads
+window.onload = setCurrentDate;
+</script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}"/>
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"/>
+</head>
+<body>
+{% include 'branch_navbar.html' %}
+<!-- End Navbar -->
+</div>
+
+<div class="container">
+    <div class="page-inner">
+
+
+        <form method="post">
+            {% csrf_token %}
+            <p style="color:red;text-align:center;font-size:22px;font-weight:bold">{{msg}}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Consignor information</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+        <label for="dest">Destination</label>
+        <input type="text" class="form-control" id="dest" name="dest" list="dest_list" oninput="showDestDatalist()">
+        <datalist id="dest_list"></datalist>
+    </div>
+
+</div>
+
+<div class="col-md-3">
+    <br/>
+    <br/>
+    <button type="submit" value="Submit" name="submit" class="form-control btn-primary col-md-3">Submit</button>
+</div>
+                            </div>
+                        </div>
+
+        </form>
+<br/>
+    </div>
+        <form method="post" action="saveLHSList">
+                        {% csrf_token %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Information</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table
+                            id="basic-datatables"
+                            class="display table table-striped table-hover"
+                    >
+        <thead>
+            <tr>
+                <th>Select</th> <!-- New header for checkboxes -->
+                <th>LR.No</th>
+                <th>Quantity</th>
+                <th>Description of Goods</th>
+                <th>Destination</th>
+                <th>Consignee</th>
+                <th>Total</th>
+                <th>Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in trip %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selected_rows" value="{{ forloop.counter }}" checked>
+                        </td>
+                        <td>{{ trip.track_id }}</td>
+                        <td>{{ trip.pieces }}</td>
+                        <td>{{ trip.desc_product }}</td>
+                        <td>{{ trip.route_to }}</td>
+                        <td>{{ trip.receiver_name }}</td>
+                        <td>{{ trip.total_cost }}</td>
+                        <td>{{ trip.pay_status }}</td>
+                        <!-- Hidden input fields to send data to the view -->
+                        <input type="hidden" name="track_id_{{ forloop.counter }}" value="{{ trip.track_id }}">
+                        <input type="hidden" name="pieces_{{ forloop.counter }}" value="{{ trip.pieces }}">
+                        <input type="hidden" name="desc_product_{{ forloop.counter }}" value="{{ trip.desc_product }}">
+                        <input type="hidden" name="route_to_{{ forloop.counter }}" value="{{ trip.route_to }}">
+                        <input type="hidden" name="receiver_name_{{ forloop.counter }}" value="{{ trip.receiver_name }}">
+                        <input type="hidden" name="pay_status_{{ forloop.counter }}" value="{{ trip.pay_status }}">
+                        <input type="hidden" name="total_cost{{ forloop.counter }}" value="{{ trip.total_cost }}">
+                        <input type="hidden" name="weightAmt{{ forloop.counter }}" value="{{ trip.weightAmt }}">
+                        <input type="hidden" name="freight{{ forloop.counter }}" value="{{ trip.freight }}">
+                        <input type="hidden" name="hamali{{ forloop.counter }}" value="{{ trip.hamali }}">
+                        <input type="hidden" name="door_charge{{ forloop.counter }}" value="{{ trip.door_charge }}">
+                        <input type="hidden" name="st_charge{{ forloop.counter }}" value="{{ trip.st_charge }}">
+                    </tr>
+                {% endfor %}
+            <input type="hidden" name="total_rows" value="{{ trip|length }}">
+        </tbody>
+    </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<button type="submit" class="btn-primary btn">Save</button>
+        </form>
+<script>
+
+function showDestDatalist() {
+    const input = document.getElementById('dest');
+    const datalist = document.getElementById('dest_list');
+
+    if (input.value.length >= 2) {
+        fetch(`/get_destination?query=${encodeURIComponent(input.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data); // Debugging: Check the data in the console
+                datalist.innerHTML = ''; // Clear previous options
+
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(number => {
+                        const option = document.createElement('option');
+                        option.value = number;
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = 'No results';
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching route_to:', error));
+    } else {
+        datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+    }
+}
+
+</script>
+
+	<!-- Add the following script just above the closing </body> tag -->
+</div>
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+    <!-- Chart JS -->
+    <script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{% static 'assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+    <!-- Google Maps Plugin -->
+    <script src="{% static 'assets/js/plugin/gmaps/gmaps.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+  </body>
+</html>

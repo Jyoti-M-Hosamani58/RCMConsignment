@@ -1,0 +1,532 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>RATAN CARGO MOVERS</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+        WebFont.load({
+          google: { families: ["Public Sans:300,400,500,600,700"] },
+          custom: {
+            families: [
+              "Font Awesome 5 Solid",
+              "Font Awesome 5 Regular",
+              "Font Awesome 5 Brands",
+              "simple-line-icons",
+            ],
+            urls: ["{% static 'assets/css/fonts.min.css' %}"],
+          },
+          active: function () {
+            sessionStorage.fonts = true;
+          },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}"/>
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"/>
+</head>
+<body>
+{% include 'branch_navbar.html' %}
+<!-- End Navbar -->
+</div>
+
+<div class="container">
+    <div class="page-inner">
+
+
+        <form method="post">
+            {% csrf_token %}
+            <p style="color:red;text-align:center;font-size:22px;font-weight:bold">{{msg}}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Consignor information</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label>From</label>
+                                        <input type="text" class="form-control" id="from" name="from" placeholder="From"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label>To</label>
+                                        <input type="text" class="form-control" id="to" name="to" placeholder="To"
+                                               required><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Consignor</div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <!-- Consignor Card -->
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">CONSIGNOR</h6>
+                                                <input type="text" id="senderName" name="a1" placeholder="Consigner"
+                                                       required list="consignor_name" oninput="showConsignorDatalist()"
+                                                       onchange="fetchSenderDetails()" class="form-control">
+                                                <datalist id="consignor_name"></datalist>
+                                                <input type="hidden" id="senderID" name="senderid" class="form-control">
+                                                <br>
+                                                <input type="text" id="senderAddress" name="a4"
+                                                       placeholder="Consigner Address" class="form-control">
+                                                <br>
+                                                <input type="tel" id="senderMobile" pattern="[0-9]{10}" maxlength="10"
+                                                       name="a2" placeholder="Consigner Mobile" required
+                                                       class="form-control">
+                                                <br>
+                                                <input type="text" id="sendergst" maxlength="15" name="sendergst"
+                                                       placeholder="Consigner GST" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Consignee Card -->
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">CONSIGNEE</h6>
+                                                <input type="text" id="receiverName" name="a5" placeholder="Consignee"
+                                                       required list="consignee_name" oninput="showConsigneeDatalist()"
+                                                       onchange="fetchRecDetails()" class="form-control">
+                                                <datalist id="consignee_name"></datalist>
+                                                <input type="hidden" id="receiverId" name="id" class="form-control">
+                                                <br>
+                                                <input type="text" id="receiverAddress" name="a8"
+                                                       placeholder="Consignee Address" class="form-control">
+                                                <br>
+                                                <input type="tel" id="receiverMobile" pattern="[0-9]{10}" maxlength="10"
+                                                       name="a6" placeholder="Consignee Mobile" required
+                                                       class="form-control">
+                                                <br>
+                                                <input type="text" id="receivergst" maxlength="15" name="receivergst"
+                                                       placeholder="Consignee GST" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <!-- Table Section -->
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Table</h6>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr class="form-control">
+                                                    <th style="width: 10%;">SL. No</th> <!-- Adjust width for SL. No -->
+                                                    <th style="width: 30%;">Pieces</th> <!-- Adjust width for Pieces -->
+                                                    <th style="width: 60%;">Product</th>
+                                                    <!-- Adjust width for Product -->
+                                                </tr>
+                                                </thead>
+                                                <tbody id="productTableBody" class="form-control">
+                                                <!-- Rows will be inserted here by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Charges Section -->
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Charges</h6>
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label for="weight" class="form-label">Weight</label>
+                                                    <input type="text" placeholder="Weight" id="weight"
+                                                           oninput="calculateFreight()" name="weight">
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="weightAmt" class="form-label">Weight AMt</label>
+                                                    <input type="text" name="weightAmt" oninput="calculateFreight()"
+                                                           placeholder="Charged Weight" id="weightAmt">
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="freight" class="form-label">Freight</label>
+                                                    <input type="text" oninput="calculateTotalCost()" id="freight"
+                                                           name="freight" placeholder="Freight" required>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="hamali" class="form-label">Hamali</label>
+                                                    <input type="text" oninput="calculateTotalCost()" id="hamali"
+                                                           name="hamali" placeholder="Hamali Charge">
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="door_charge" class="form-label">Door Charges</label>
+                                                    <input id="door_charge" oninput="calculateTotalCost()"
+                                                           name="door_charge" placeholder="Door Charge"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="st_charge" class="form-label">ST Charge</label>
+                                                    <input id="st_charge" oninput="calculateTotalCost()"
+                                                           name="st_charge" placeholder="ST Charge" value="10"/>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="balance" class="form-label">Balance</label>
+                                                    <input type="text" id="balance" oninput="calculateTotalCost()"
+                                                           name="balance"/>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="total" class="form-label">Total</label>
+                                                    <input id="total" name="cost" placeholder="Total" required/>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="payment" class="form-label">Payment Mode</label>
+                                                    <select name="payment" id="payment" onchange="toggleAmountInput()">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="Paid">Paid</option>
+                                                        <option value="Consigner_AC">Consigner Account</option>
+                                                        <option value="Consignee_AC">Consignee Account</option>
+                                                        <option value="ToPay">To Pay</option>
+                                                    </select>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Invoice Details</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Invoice No" id="prod_invoice"
+                                                   class="form-control" name="prod_invoice">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Invoice Value" id="prod_price"
+                                                   class="form-control" name="prod_price">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <div id="billNoContainer" style="display: none;">
+                                                <input type="text" placeholder="E-Way Bill No" id="bill_no"
+                                                       class="form-control" name="ewaybill_no">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" style="border: 2px solid darkblue;" id="consignor_copy" name="consignor_copy"
+                                                       value="consignor"
+                                                       class="form-check-input">
+                                                <label for="consignor_copy" class="form-check-label">Consignor
+                                                    Copy</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" style="border: 2px solid darkblue;" id="consignee_copy" name="consignee_copy"
+                                                       value="consignee"
+                                                       checked class="form-check-input">
+                                                <label for="consignee_copy" class="form-check-label">Consignee
+                                                    Copy</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" style="border: 2px solid darkblue;" id="payment_copy" name="payment_copy"
+                                                       value="payment"
+                                                       checked
+                                                       class="form-check-input">
+                                                <label for="payment_copy" class="form-check-label">Payment Copy</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" style="border: 2px solid darkblue;" id="ho_copy" name="ho_copy"
+                                                       value="ho"
+                                                       checked
+                                                       class="form-check-input">
+                                                <label for="ho_copy" class="form-check-label">HO Copy</label>
+                                            </div><br/>
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" style="border: 2px solid darkblue;" id="file_copy" name="file_copy"
+                                                       value="file"
+                                                       checked
+                                                       class="form-check-input">
+                                                <label for="file_copy" class="form-check-label">File Copy</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                               <label>Collection Type</label>
+    <div class="form-group d-flex align-items-center">
+        <div class="form-check form-check-inline">
+            <input type="radio" id="godownCollection" name="collection_option" style="border: 2px solid darkblue;" value="GODOWN" class="form-check-input custom-radio">
+            <label for="godownCollection" class="form-check-label">Godown </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" id="lcmDelivery" style="border: 2px solid darkblue;" name="collection_option" value="LCM" checked class="form-check-input custom-radio">
+            <label for="lcmDelivery" class="form-check-label">LCM</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" id="gdmCollection" name="collection_option" style="border: 2px solid darkblue;" value="GDM" checked class="form-check-input custom-radio">
+            <label for="gdmCollection" class="form-check-label">GDM</label>
+        </div>
+    </div>
+</div><br/><br/>
+     <br/>
+                                </div>
+                                <div class="col-md-4 col-lg-4">
+                                    <label>Delivery Type</label>
+    <div class="form-group d-flex align-items-center">
+        <div class="form-check form-check-inline">
+            <input type="radio" id="godownDelivery" name="delivery_option" style="border: 2px solid darkblue;" value="GODOWN" class="form-check-input custom-radio">
+            <label for="godownDelivery" class="form-check-label">Godown Delivery</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" id="doorDelivery" style="border: 2px solid darkblue;" name="delivery_option" value="LCM" checked class="form-check-input custom-radio">
+            <label for="doorDelivery" class="form-check-label">Door Delivery</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" id="GDMDelivery" name="delivery_option" style="border: 2px solid darkblue;" value="GDM" checked class="form-check-input custom-radio">
+            <label for="GDMDelivery" class="form-check-label">GDM</label>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Add the following script just above the closing </body> tag -->
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const prodPriceField = document.getElementById('prod_price');
+        const billNoContainer = document.getElementById('billNoContainer');
+
+        function checkPrice() {
+        const price = parseFloat(prodPriceField.value) || 0;
+        if (price > 49999) {
+            billNoContainer.style.display = 'block';
+        } else {
+            billNoContainer.style.display = 'none';
+            document.getElementById('bill_no').value = ''; // Clear value when hidden
+        }
+    }
+
+        // Attach event listener
+        prodPriceField.addEventListener('input', checkPrice);
+
+        // Initial check on page load
+        checkPrice();
+    });
+
+
+    const numberOfRows = 5;
+    const tbody = document.getElementById('productTableBody');
+
+    for (let i = 1; i <= numberOfRows; i++) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i}</td> <!-- Serial Number -->
+            <td><input type="text" name="pieces[]"></td>
+            <td><input type="text" name="product[]"></td>
+
+        `;
+        tbody.appendChild(row);
+    }
+
+
+
+    function showConsigneeDatalist() {
+        const input = document.getElementById('receiverName');
+        const datalist = document.getElementById('consignee_name');
+
+        if (input.value.length >= 2) {
+            fetch(`/get_consignee_name?query=${encodeURIComponent(input.value)}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched data:', data); // Debugging: Check the data in the console
+                    datalist.innerHTML = ''; // Clear previous options
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(number => {
+                            const option = document.createElement('option');
+                            option.value = number;
+                            datalist.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.value = 'No results';
+                        datalist.appendChild(option);
+                    }
+                })
+                .catch(error => console.error('Error fetching vehicle numbers:', error));
+        } else {
+            datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+        }
+    }
+    // New function to fetch sender details when a name is selected
+    function fetchRecDetails() {
+        const receiverName = document.getElementById('receiverName').value;
+
+        if (senderName) {
+            fetch(`/get_rec_details?name=${encodeURIComponent(receiverName)}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched sender details:', data); // Debugging: Check the data in the console
+
+                    // Populate the form fields with the fetched data
+                    document.getElementById('receiverMobile').value = data.receiver_mobile || '';
+                    document.getElementById('receivergst').value = data.receiver_GST || '';
+                    document.getElementById('receiverAddress').value = data.receiver_address || '';
+                })
+                .catch(error => console.error('Error fetching sender details:', error));
+        }
+    }
+    function showConsignorDatalist() {
+        const input = document.getElementById('senderName');
+        const datalist = document.getElementById('consignor_name');
+
+        if (input.value.length >= 2) {
+            fetch(`/get_consignor_name?query=${encodeURIComponent(input.value)}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched data:', data); // Debugging: Check the data in the console
+                    datalist.innerHTML = ''; // Clear previous options
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(number => {
+                            const option = document.createElement('option');
+                            option.value = number;
+                            datalist.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.value = 'No results';
+                        datalist.appendChild(option);
+                    }
+                })
+                .catch(error => console.error('Error fetching vehicle numbers:', error));
+        } else {
+            datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+        }
+    }
+
+    // New function to fetch sender details when a name is selected
+    function fetchSenderDetails() {
+        const senderName = document.getElementById('senderName').value;
+
+        if (senderName) {
+            fetch(`/get_sender_details?name=${encodeURIComponent(senderName)}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched sender details:', data); // Debugging: Check the data in the console
+
+                    // Populate the form fields with the fetched data
+                    document.getElementById('senderMobile').value = data.sender_mobile || '';
+                    document.getElementById('sendergst').value = data.sender_GST || '';
+                    document.getElementById('senderAddress').value = data.sender_address || '';            })
+                .catch(error => console.error('Error fetching sender details:', error));
+        }
+    }
+</script>
+<script>
+    function calculateFreight() {
+           // Get the values for weightAmt and weight
+           let weightAmt = parseFloat(document.getElementById("weightAmt").value) || 0;
+           let weight = parseFloat(document.getElementById("weight").value) || 0;
+
+           // Calculate the freight (charge_weight * weight)
+           let freight = weightAmt * weight;
+           document.getElementById("freight").value = freight.toFixed(2);
+
+           // Recalculate the total cost
+           calculateTotalCost();
+       }
+
+       function calculateTotalCost() {
+           // Get all the relevant charges
+           let freight = parseFloat(document.getElementById("freight").value) || 0;
+           let hamali = parseFloat(document.getElementById("hamali").value) || 0;
+           let doorCharge = parseFloat(document.getElementById("door_charge").value) || 0;
+           let stCharge = parseFloat(document.getElementById("st_charge").value) || 0;
+
+           // Get the balance
+           let balance = parseFloat(document.getElementById("balance").value) || 0;
+
+           // Calculate the total cost including the balance
+           let totalCost = freight + hamali + doorCharge + stCharge + balance;
+           document.getElementById("total").value = totalCost.toFixed(2);
+       }
+</script>
+
+
+</div>
+<!--   Core JS Files   -->
+<script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+<!-- Datatables -->
+<script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+<!-- Kaiadmin JS -->
+<script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+<!-- Kaiadmin DEMO methods, don't include it in your project! -->
+<script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+
+</body>
+</html>

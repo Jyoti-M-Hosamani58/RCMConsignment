@@ -1,0 +1,262 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+    <script>
+        function filterConsignments() {
+            var input, filter, table, rows, td, i, shouldShow;
+            input = document.getElementById("driver_name");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("consignmentTable");
+            rows = table.getElementsByTagName("tr");
+
+            for (i = 1; i < rows.length; i++) {
+                td = rows[i].getElementsByTagName("td")[4]; // Adjust index as needed for filtering
+                if (td) {
+                    shouldShow = td.textContent || td.innerText;
+                    if (shouldShow.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  </head>
+  <body>
+  {% include 'index_menu.html' %}
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+
+      <script>
+    // Function to set the default date to the current date
+function setCurrentDate() {
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1; // Months are zero-based
+    var year = today.getFullYear();
+
+    // Format date as YYYY-MM-DD
+    var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+    // Set the value of the date input
+    document.getElementById('fromdate').value = formattedDate;
+    document.getElementById('todate').value = formattedDate;
+}
+
+// Run the function when the page loads
+window.onload = setCurrentDate;
+</script>
+
+<form method="POST" action="{% url 'advance_report' %}" enctype="multipart/form-data">
+             {% csrf_token %}
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Consignor information</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <label for="driver_name">Search by Driver Name:</label>
+        <input type="text" id="driver_name" name="driver_name"  placeholder="Enter driver name" onkeyup="filterConsignments()" class="form-control">
+
+                        </div>
+                      </div>
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                         <label>Lr No</label>
+            <input type="text" class="form-control" id="lrno" name="lrno" >
+                        </div>
+                      </div>
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                         <label for="from_date">From Date:</label>
+        <input type="date" id="from_date" name="from_date" value="{{ from_date }}" class="form-control">
+
+                        </div>
+                      </div>
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                        <label for="to_date">To Date:</label>
+        <input type="date" id="to_date" name="to_date" value="{{ to_date }}"class="form-control">
+
+                        </div>
+                      </div>
+                        <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                         <label for="vehicalno">Vehicle No</label>
+<input type="text" class="form-control" id="vehicalno" name="vehicalno" list="vehicle_numbers" oninput="showDatalist()">
+    <datalist id="vehicle_numbers"></datalist>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                  <div class="card-action">
+                    <button class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+</form>
+               <h2>
+    {% if driver_name and vehicalno %}
+        Search Results for "{{ vehicalno }} and {{ driver_name }}"
+    {% elif vehicalno %}
+        Search Results for Vehicle No: "{{ vehicalno }}"
+    {% elif driver_name %}
+        Search Results for Driver: "{{ driver_name }}"
+    {% elif from_date and to_date %}
+        Results from {{ from_date }} to {{ to_date }}
+    {% else %}
+        All Reports
+    {% endif %}
+</h2>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                        {% if results %}
+
+                      <table
+                        id="basic-datatables"
+                        class="display table table-striped table-hover"
+                      >
+                        <thead>
+                         <tr>
+                <th>SI No</th>
+                <th>Trip ID</th>
+                <th>Date</th>
+                <th>Vehicle No</th>
+                <th>Driver Name</th>
+                <th>Advance Given</th>
+            </tr>
+                        </thead>
+                     <tbody>
+        {% for item in results %}
+                <tr>
+                    <td>{{ forloop.counter }}</td> <!-- SI No: Use Django's forloop.counter -->
+                    <td>{{ item.trip_id }}</td>
+                    <td>{{ item.Date }}</td>
+                    <td>{{ item.VehicalNo }}</td>
+                    <td>{{ item.DriverName }}</td>
+                    <td>{{ item.AdvGiven }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+                      </table>
+                        {% else %}
+    <p>No records found.</p>
+{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+      </div>
+ <script>
+        function showDatalist() {
+    const input = document.getElementById('vehicalno');
+    const datalist = document.getElementById('vehicle_numbers');
+
+    if (input.value.length >= 2) {
+        fetch(`/get_vehicle_numbers?query=${encodeURIComponent(input.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data); // Debugging: Check the data in the console
+                datalist.innerHTML = ''; // Clear previous options
+
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(number => {
+                        const option = document.createElement('option');
+                        option.value = number;
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = 'No results';
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching vehicle numbers:', error));
+    } else {
+        datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+    }
+}
+</script>
+      <!-- End Custom template -->
+    </div>
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+
+  </body>
+</html>

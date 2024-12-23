@@ -1,0 +1,369 @@
+{% load static %}
+<!-- End Logo Header -->
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+                <h4 style="color:white;">Protech Soft</h4>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="gg-menu-right"></i>
+                    </button>
+                    <button class="btn btn-toggle sidenav-toggler">
+                        <i class="gg-menu-left"></i>
+                    </button>
+                </div>
+                <button class="topbar-toggler more">
+                    <i class="gg-more-vertical-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item active">
+                        <a
+                                data-bs-toggle="collapse"
+                                href="#dashboard"
+                                class="collapsed"
+                                aria-expanded="false"
+                        >
+                            <i class="fas fa-home"></i>
+                            <p>DASHBOARD</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="dashboard">
+                            <ul class="nav nav-collapse">
+                                <li>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#base">
+                            <i class="fas fa-layer-group"></i>
+                            <p>Master</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{% url 'branch' %}">
+                                        <span class="sub-item">Branch</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'view_branch' %}">
+                                        <span class="sub-item">View Branch</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'driver' %}">
+                                        <span class="sub-item">Driver</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'view_driver' %}">
+                                        <span class="sub-item">View driver</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'vehicle' %}">
+                                        <span class="sub-item">Vehicle</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'view_vehicle' %}">
+                                        <span class="sub-item">View Vehicle</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminExpenses' %}">
+                                        <span class="sub-item">Add expenses</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminViewExpenses' %}">
+                                        <span class="sub-item">View Expenses</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <i class="fas fa-th-list"></i>
+                            <p>Consignment Master</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="sidebarLayouts">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{% url 'consignorMaster' %}">
+                                        <span class="sub-item">Consignor</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminConsignorView' %}">
+                                        <span class="sub-item">Consignor View</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'consigneeMaster' %}">
+                                        <span class="sub-item">Consignee</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminConsigneeView' %}">
+                                        <span class="sub-item">Consignee View</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminView_Consignment' %}">
+                                        <span class="sub-item">Consignment</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'adminstaff_view' %}">
+                                        <span class="sub-item">Staff View</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#tables">
+                            <i class="fas fa-table"></i>
+                            <p>Reports</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="tables">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Consignment Status</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Disel report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Partywise report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Unloaded report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Advance report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Profit report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Account report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sub-item">Collection report</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-desktop"></i>
+                            <p>Trip Sheet</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Location</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'userlogin' %}">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <p>Logout</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="main-header">
+            <div class="main-header-logo">
+                <!-- Logo Header -->
+                <div class="logo-header" data-background-color="dark">
+                    <a href="#" class="logo">
+                        <img
+                                src="{% static 'assets/img/kaiadmin/logo_light.svg' %}"
+                                alt="navbar brand"
+                                class="navbar-brand"
+                                height="20"
+                        />
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar">
+                            <i class="gg-menu-right"></i>
+                        </button>
+                        <button class="btn btn-toggle sidenav-toggler">
+                            <i class="gg-menu-left"></i>
+                        </button>
+                    </div>
+                    <button class="topbar-toggler more">
+                        <i class="gg-more-vertical-alt"></i>
+                    </button>
+                </div>
+                <!-- End Logo Header -->
+            </div>
+            <!-- Navbar Header -->
+            <nav
+                    class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+            >
+                <div class="container-fluid">
+                    <nav
+                            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+                    >
+
+                    </nav>
+
+                    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                        <li
+                                class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                        >
+                            <a
+                                    class="nav-link dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    href="#"
+                                    role="button"
+                                    aria-expanded="false"
+                                    aria-haspopup="true"
+                            >
+                                <i class="fa fa-search"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-search animated fadeIn">
+                                <form class="navbar-left navbar-form nav-search">
+                                    <div class="input-group">
+                                        <input
+                                                type="text"
+                                                placeholder="Search ..."
+                                                class="form-control"
+                                        />
+                                    </div>
+                                </form>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item topbar-icon dropdown hidden-caret">
+                            <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="notifDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                <i class="fa fa-bell"></i>
+                                <span class="notification">4</span>
+                            </a>
+                            <ul
+                                    class="dropdown-menu notif-box animated fadeIn"
+                                    aria-labelledby="notifDropdown"
+                            >
+                                <li>
+                                    <div class="dropdown-title">
+                                        You have 4 new notification
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="notif-scroll scrollbar-outer">
+                                        <div class="notif-center">
+                                            <a href="#">
+                                                <div class="notif-icon notif-primary">
+                                                    <i class="fa fa-user-plus"></i>
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="block"> New user registered </span>
+                                                    <span class="time">5 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-icon notif-success">
+                                                    <i class="fa fa-comment"></i>
+                                                </div>
+                                                <div class="notif-content">
+                              <span class="block">
+                                Rahmad commented on Admin
+                              </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img
+                                                            src="{% static 'assets/img/profile2.jpg' %}"
+                                                            alt="Img Profile"
+                                                    />
+                                                </div>
+                                                <div class="notif-content">
+                              <span class="block">
+                                Reza send messages to you
+                              </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-icon notif-danger">
+                                                    <i class="fa fa-heart"></i>
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="block"> Farrah liked Admin </span>
+                                                    <span class="time">17 minutes ago</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="see-all" href="javascript:void(0);"
+                                    >See all notifications<i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>

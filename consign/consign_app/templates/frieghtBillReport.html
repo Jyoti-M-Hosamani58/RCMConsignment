@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Ratan Cargo Movers</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+        WebFont.load({
+          google: { families: ["Public Sans:300,400,500,600,700"] },
+          custom: {
+            families: [
+              "Font Awesome 5 Solid",
+              "Font Awesome 5 Regular",
+              "Font Awesome 5 Brands",
+              "simple-line-icons",
+            ],
+            urls: ["{% static 'assets/css/fonts.min.css' %}"],
+          },
+          active: function () {
+            sessionStorage.fonts = true;
+          },
+        });
+    </script>
+</head>
+</head>
+<!-- CSS Files -->
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}"/>
+
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"/>
+</head>
+<body>
+{% include 'branch_navbar.html' %}
+<!-- End Navbar -->
+</div>
+    <div class="container">
+    <div class="page-inner">
+<div class="text-center my-4">
+        <button onclick="downloadPDF()" class="btn btn-primary">Download PDF</button>
+    </div>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% else %}
+    <!-- Button to download PDF -->
+
+    <div class="table-container" id="table-content">
+ <div class="card-body">
+                <div class="table-responsive">
+                    <table
+                            id="basic-datatables"
+                            class="display table table-striped table-hover"
+                    >             <thead>
+                <tr>
+                    <td colspan="6" style="text-align:center; font-size:16px;">
+                        <strong>RATAN CARGO MOVERS</strong><br />
+                        BOOKED AT OWNER'S RISK<br/><br/>
+                      <strong>FREIGHT BILL</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <strong> NAME: {{ sender_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+                            TOTAL AMOUNT: {{ total_account_cost }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>FROM DATE: {{ from_date }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TO DATE: {{ to_date }}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th>SI. No</th>
+                    <th>LR NO</th>
+                    <th>CONSIGNEE NAME</th>
+                    <th>Date</th>
+                    <th>Account</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consignment in consignments %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ consignment.track_id }}</td>
+                    <td>{{ consignment.receiver_name }}</td>
+                    <td>{{ consignment.date|date:"d-m-Y" }}</td>
+                    <td>{{ consignment.account_total_cost }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+    {% endif %}
+    </div>
+    </div>
+ <script>
+        function downloadPDF() {
+            var element = document.getElementById('table-content');
+            var opt = {
+                margin:       0.4,
+                filename:     'Consignment_Details.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+</div>
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+    <!-- Chart JS -->
+    <script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{% static 'assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+    <!-- Google Maps Plugin -->
+    <script src="{% static 'assets/js/plugin/gmaps/gmaps.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Forms - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  </head>
+  <body>
+      <!-- End Sidebar -->
+{% include 'index_menu.html' %}
+          <!-- End Navbar -->
+        </div><br/> <br/> <br/> <br/>
+      <script>
+    // Function to set the default date to the current date
+    function setCurrentDate() {
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1; // Months are zero-based
+        var year = today.getFullYear();
+
+        // Format date as YYYY-MM-DD
+        var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+        // Set the value of the date input
+        document.getElementById('date').value = formattedDate;
+    }
+
+    // Run the function when the page loads
+    window.onload = setCurrentDate;
+
+
+function calculateTax() {
+    var gstValue = parseFloat(document.getElementById('gst').value) || 0;
+    var halfGst = (gstValue / 2).toFixed(2);
+
+    document.getElementById('cgst').value = halfGst;
+    document.getElementById('sgst').value = halfGst;
+}
+
+    </script>
+
+<form action="{% url 'saveadminExpenses' %}" method="POST" enctype="multipart/form-data">
+             {% csrf_token %}
+        <div class="container">
+          <div class="page-inner">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Branch information</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+
+
+
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                <label>Date</label>
+            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                <label>Amount</label>
+            <input type="text" class="form-control" id="amt" name="amt">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                <label>Description</label>
+            <input type="text" class="form-control" id="reason" name="reason" oninput="toggleSalaryField()">
+        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <div id="salaryContainer" style="display: none;">
+            <label>Salary Details</label>
+            <input type="text" class="form-control" id="salaryDetails" name="salaryDetails">
+        </div>
+        </div>
+                      </div>
+                    </div>
+                  <div class="card-action">
+                    <button class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+</form>
+<script>
+function toggleSalaryField() {
+    const reasonInput = document.getElementById('reason');
+    const salaryContainer = document.getElementById('salaryContainer');
+
+    if (reasonInput.value.toLowerCase() === 'salary') {
+        salaryContainer.style.display = 'block';
+    } else {
+        salaryContainer.style.display = 'none';
+    }
+}
+</script>
+      <!-- End Custom template -->
+    </div>
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+    <!-- Chart JS -->
+    <script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{% static 'assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+    <!-- Google Maps Plugin -->
+    <script src="{% static 'assets/js/plugin/gmaps/gmaps.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+  </body>
+</html>

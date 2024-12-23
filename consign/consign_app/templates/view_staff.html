@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Forms - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  </head>
+  <body>
+      <!-- End Sidebar -->
+{% include 'branch_navbar.html' %}
+          <!-- End Navbar -->
+          <div class="container">
+          <div class="page-inner">
+
+<form method="POST" enctype="multipart/form-data">
+             {% csrf_token %}
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Branch information</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required list="staff_name" oninput="showStaffDatalist()">
+                <datalist id="staff_name"></datalist>
+            </div>
+                      </div>
+            <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                <br>
+                <button type="submit" class="form-control btn-primary">Search</button>
+            </div>
+            </div>
+        </div>
+            </form>
+          </div>
+          </div>
+        <br>
+        <div class="">
+            <div class="">
+                <form method="get">
+                    <div class="table-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Consignee </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table style="border-collapse: collapse; width: 100%; text-align: left;"
+                                       id="basic-datatables print_area"
+                                       class="display table table-striped table-hover table table-striped table-bordered"
+                                >
+
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Branch</th>
+                            <th>Phone no.</th>
+                            <th>Staff Id</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for d in data %}
+                        <tr class="custom-row">
+                            <td>{{d.staffname}}</td>
+                            <td>{{ d.Branch}}</td>
+                            <td>{{ d.staffPhone }}</td>
+                            <td>{{ d.staffid}}</td>
+
+
+                            <td class="action-btns">
+                                <a href="{% url 'edit_staff' d.id %}" class="btn btn-info btn-lg">Edit</a>
+                            </td>
+                            <td>
+                                 <a href="{% url 'delete_staff' d.id %}" class="btn btn-danger btn-lg">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+function showStaffDatalist() {
+    const input = document.getElementById('name');
+    const datalist = document.getElementById('staff_name');
+
+    if (input.value.length >= 2) {
+        fetch(`/get_staff?query=${encodeURIComponent(input.value)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data); // Debugging: Check the data in the console
+                datalist.innerHTML = ''; // Clear previous options
+
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(number => {
+                        const option = document.createElement('option');
+                        option.value = number;
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = 'No results';
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error('Error fetching vehicle numbers:', error));
+    } else {
+        datalist.innerHTML = ''; // Clear the datalist if fewer than 2 characters
+    }
+}
+
+    </script>
+
+<script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+<!-- Chart JS -->
+<script src="{% static 'assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+<!-- jQuery Sparkline -->
+<script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+<!-- Chart Circle -->
+<script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+<!-- Datatables -->
+<script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+<!-- Bootstrap Notify -->
+<script src="{% static 'assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+<!-- jQuery Vector Maps -->
+<script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+<script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+<!-- Google Maps Plugin -->
+<script src="{% static 'assets/js/plugin/gmaps/gmaps.js' %}"></script>
+
+<!-- Sweet Alert -->
+<script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+<!-- Kaiadmin JS -->
+<script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+<!-- Kaiadmin DEMO methods, don't include it in your project! -->
+<script src="{% static 'assets/js/setting-demo2.js' %}"></script>
+</body>
+</html>
